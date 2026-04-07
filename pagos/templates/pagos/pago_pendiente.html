@@ -1,0 +1,105 @@
+{% extends 'index/index.html' %}
+{% load static %}
+
+{% block extra_head %}
+
+<link rel="stylesheet" href="{% static 'pagos/css/pago_pendiente.css' %}">
+
+{% endblock %}
+
+
+
+{% block content %}
+{% include 'partials/navbar.html' %}
+
+<main>
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-12 col-md-8 col-lg-5 text-center">
+
+     
+        <div class="pending-icon">
+          <i class="bi bi-clock"></i>
+        </div>
+
+        <h1 class="pending-title mb-2">Pago en proceso</h1>
+        <p class="text-muted mb-5">
+          Tu pago está siendo verificado. Una vez confirmado recibirás la notificación y tu pedido será procesado.
+        </p>
+
+       
+        {% if pedido %}
+        <div class="card border-0 shadow-sm rounded-4 text-start mb-4">
+          <div class="card-body p-4">
+            <h6 class="text-uppercase text-muted small fw-500 mb-3" style="letter-spacing:1.5px;">
+              Detalle del pedido
+            </h6>
+
+            <div class="info-row">
+              <span class="text-muted">Número de pedido</span>
+              <span class="fw-500">#{{ pedido.numero_pedido }}</span>
+            </div>
+
+            <div class="info-row">
+              <span class="text-muted">Fecha</span>
+              <span class="fw-500">{{ pedido.fecha_pedido|date:"j \d\e F, Y" }}</span>
+            </div>
+
+            <div class="info-row">
+              <span class="text-muted">Total</span>
+              <span class="fw-bold">{{ pedido.total | precio_cop }}</span>
+            </div>
+
+            <div class="info-row">
+              <span class="text-muted">Estado</span>
+              <span class="badge bg-warning text-dark rounded-pill px-3">Pendiente</span>
+            </div>
+
+          </div>
+        </div>
+        {% endif %}
+
+       
+        <div class="card border-0 shadow-sm rounded-4 text-start mb-4">
+          <div class="card-body p-4">
+            <h6 class="text-uppercase text-muted small fw-500 mb-3" style="letter-spacing:1.5px;">
+              ¿Qué pasa ahora?
+            </h6>
+            <ul class="list-unstyled mb-0">
+              <li class="d-flex align-items-center gap-2 py-2 border-bottom">
+                <i class="bi bi-envelope text-muted"></i>
+                <span class="small">Recibirás un correo cuando el pago sea confirmado</span>
+              </li>
+              <li class="d-flex align-items-center gap-2 py-2 border-bottom">
+                <i class="bi bi-bag text-muted"></i>
+                <span class="small">Tu pedido se procesará automáticamente al confirmarse</span>
+              </li>
+              <li class="d-flex align-items-center gap-2 py-2">
+                <i class="bi bi-clock-history text-muted"></i>
+                <span class="small">Este proceso puede tomar hasta 2 días hábiles</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+   
+        <div class="d-grid gap-2">
+          {% if pedido %}
+          <a href="{% url 'lista_pedidos' %}" class="btn btn-dark rounded-pill py-3">
+            Ver mis pedidos
+          </a>
+          {% endif %}
+          <a href="{% url 'index' %}" class="btn btn-outline-dark rounded-pill py-3">
+            Volver al inicio
+          </a>
+        </div>
+
+        <p class="text-muted small mt-4">
+          ¿Tienes dudas?
+          <a href="mailto:soporte@eternalz.com" class="text-dark">Contáctanos</a>
+        </p>
+
+      </div>
+    </div>
+  </div>
+</main>

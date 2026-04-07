@@ -1,0 +1,123 @@
+{% extends 'index/index.html' %}
+{% load static %}
+{% load filtros %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'css/pedidos/lista_pedidos.css' %}">
+
+{% endblock %}
+
+{% block content %}
+{% include 'partials/navbar.html' %}
+
+<main>
+  <div class="container">
+
+    <div class="mb-5">
+      <p class="text-muted small text-uppercase ls-2 mb-1" style="letter-spacing:2px;">Mi cuenta</p>
+      <h1 class="page-title mb-0">Mis pedidos</h1>
+    </div>
+
+
+    {% if not pedidos %}
+    <div class="text-center py-5 my-4">
+      <i class="bi bi-bag-x display-1 d-block mb-3 text-secondary" style="opacity:.2;"></i>
+      <h5 class="fw-bold">Aún no tienes pedidos</h5>
+      <p class="text-muted mb-4">Cuando realices una compra aparecerá aquí.</p>
+      <a href="{% url 'index' %}" class="btn btn-dark rounded-pill px-5">Ver productos</a>
+    </div>
+
+
+    {% else %}
+
+    <div class="d-flex flex-column g-3">
+      {% for pedido in pedidos %}
+      <div class="pedido-card p-4">
+
+        <div class="d-flex justify-content-between align-items-start flex-wrap gap-2">
+
+
+          <div>
+            <p class="text-muted small mb-1">Número de pedido: {{pedido.numero_pedido}}</p>
+            <p class="fw-500 mb-1 fs-6">{{ pedido.nombre_envio }} {{ pedido.apellido_envio }}</p>
+            <p class="text-muted small mb-0">
+              <i class="bi bi-calendar3 me-1"></i>{{ pedido.fecha_pedido|date:"F j, Y, P" }}
+            </p>
+          </div>
+
+
+          <div class="text-end">
+
+            {% if pedido.estado == 'P' %}
+            <span class="estado-badge bg-warning text-dark d-inline-block mb-2">Pendiente</span>
+            {% elif pedido.estado == 'E' %}
+            <span class="estado-badge bg-info text-dark d-inline-block mb-2">Enviado</span>
+            {% elif pedido.estado == 'G' %}
+            <span class="estado-badge bg-success text-white d-inline-block mb-2">Entregado</span>
+            {% else %}
+            <span class="estado-badge bg-danger text-white d-inline-block mb-2">Cancelado</span>
+            {% endif %}
+
+
+            <p class="fw-bold mb-0">{{ pedido.total | precio_cop }}</p>
+
+            {% if pedido.estado == 'P' %}
+           
+  <button type="button" class="btn btn-link p-0 text-decoration-none text-dark" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+  <i class="bi bi-x-circle"></i>
+  </button>
+
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header p-3">
+        <h1 class="modal-title fs-5 fw-bolder" id="staticBackdropLabel">Cancelar pedido</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body text-center p-4">
+        ¿Estás seguro que deseas cancelar el pedido?
+      </div>
+      <div class="modal-footer d-flex justify-content-between">
+        <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Cerrar</button>
+        <form action="{% url 'cancelar_pedido' pedido.numero_pedido %}" method="post">
+              {% csrf_token %}
+
+
+               <button type="submit" class="btn btn-danger"> Sí, cancelar
+               <a href="{% url 'cancelar_pedido' pedido.numero_pedido %}"  title="Cancelar pedido" type="submit">
+          </a>
+          </button>
+          </form>
+      
+      </div>
+    </div>
+  </div>
+</div>
+
+            
+          {% endif %}
+          </div>
+
+        </div>
+
+        <div class="d-flex justify-content-between align-items-center mt-3 pt-3 border-top flex-wrap gap-2">
+          <small class="text-muted">
+            <i class="bi bi-geo-alt me-1"></i>{{ pedido.direccion_envio }}, {{ pedido.ciudad_envio }}
+          </small>
+          <a href="{% url 'detalle_pedido' pedido.id %}" class="btn btn-outline-dark btn-sm rounded-pill px-4">
+            Ver detalle
+          </a>
+
+       
+
+        </div>
+
+      </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+
+  </div>
+</main>
+{% endblock %}

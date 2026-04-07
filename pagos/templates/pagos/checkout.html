@@ -1,0 +1,107 @@
+{% extends 'index/index.html' %}
+{% load static %}
+{% load filtros %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'checkout/css/checkout.css' %}">
+
+{% endblock %}
+
+{% block content %}
+{% include 'partials/navbar.html' %}
+
+<main>
+  <div class="container">
+
+
+    <div class="text-center mb-5">
+      <p class="checkout-eyebrow">Último paso</p>
+      <h1 class="checkout-title">Checkout</h1>
+    </div>
+
+    <div class="row g-4 g-lg-5 justify-content-center">
+
+      <div class="col-lg-4 order-lg-last">
+        <div class="summary-panel rounded-4 p-4">
+
+          <div class="d-flex justify-content-between align-items-center mb-4">
+            <h5 class="section-label mb-0">Tu carrito</h5>
+            <span class="badge bg-dark rounded-pill">{{ carrito.total_items }} items</span>
+          </div>
+
+          <ul class="list-unstyled cart-summary-list mb-0">
+            {% for item in items %}
+            <li class="cart-summary-item d-flex justify-content-between align-items-start py-3">
+              <div class="item-info">
+                <p class="item-title mb-0">{{ item.variante_articulo.articulo.nombre }}</p>
+                <small class="text-muted item-desc">{{ item.variante_articulo.articulo.descripcion }}</small>
+                <small class="text-muted d-block">Cant: {{ item.cantidad }} · Talla: {{ item.variante_articulo.talla }}</small>
+              </div>
+              <span class="item-subtotal ms-3">{{ item.variante_articulo.precio | precio_cop }}</span>
+            </li>
+            {% endfor %}
+          </ul>
+
+          <div class="total-row d-flex justify-content-between align-items-center mt-3 pt-3 border-top">
+            <span class="fw-500">Total (COP)</span>
+            <strong class="total-amount">{{ carrito.total_precio | precio_cop }}</strong>
+          </div>
+
+          <div class="mt-4 pt-2 secure-note text-center text-muted small">
+            <i class="bi bi-shield-lock me-1"></i>Pago 100% seguro con MercadoPago
+          </div>
+
+        </div>
+      </div>
+
+      <div class="col-lg-8">
+        <form class="needs-validation" novalidate method="post">
+          {% csrf_token %}
+
+          <div class="card border-0 shadow-sm rounded-4 p-4 p-md-5">
+            <h5 class="section-label mb-4">
+              <i class="bi bi-person me-2 text-muted"></i>Información de envío
+            </h5>
+
+            <div class="row g-3">
+              {% for field in form %}
+                {% if field.name == 'nombre_envio' or field.name == 'apellido_envio' %}
+                  <div class="col-sm-6">
+                {% else %}
+                  <div class="col-12">
+                {% endif %}
+
+                  <label for="{{ field.id_for_label }}" class="form-label fw-500">
+                    {{ field.label }}
+                  </label>
+
+                  {{ field }}
+
+                  {% if field.errors %}
+                    <div class="invalid-feedback d-block">
+                      <i class="bi bi-exclamation-circle me-1"></i>{{ field.errors.0 }}
+                    </div>
+                  {% endif %}
+
+                </div>
+              {% endfor %}
+            </div>
+          </div>
+
+          <div class="d-grid mt-4">
+            <button type="submit" class="btn btn-dark btn-lg py-3 rounded-pill submit-btn">
+              Realizar pedido <i class="bi bi-arrow-right ms-2"></i>
+            </button>
+          </div>
+
+          <p class="text-center text-muted small mt-3">
+            Al confirmar aceptas nuestros <a href="#" class="text-dark">términos y condiciones</a>.
+          </p>
+
+        </form>
+      </div>
+
+    </div>
+  </div>
+</main>
+{% endblock %}

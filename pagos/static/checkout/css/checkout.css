@@ -1,0 +1,120 @@
+
+
+main {
+  margin-top: 106px;
+  padding-bottom: 80px;
+}
+
+/* ── Encabezado ── */
+.checkout-eyebrow {
+  font-size: 0.8rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #999;
+  margin-bottom: 6px;
+}
+
+.checkout-title {
+
+  font-style: italic;
+  font-size: clamp(2rem, 5vw, 3rem);
+  line-height: 1;
+  color: #111;
+}
+
+/* ── Etiquetas de sección ── */
+.section-label {
+ 
+  font-weight: 500;
+  font-size: 1rem;
+  letter-spacing: 0.3px;
+  color: #111;
+}
+
+/* ── Panel resumen (izquierda en desktop) ── */
+.summary-panel {
+  background-color: #f8f8f6;
+  border: 1px solid #ebebeb;
+  position: sticky;
+  top: 110px;
+}
+
+/* ── Lista de items en resumen ── */
+.cart-summary-list {
+  max-height: 340px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #ccc transparent;
+}
+
+.cart-summary-item {
+  border-bottom: 1px solid #ebebeb;
+}
+
+.cart-summary-item:last-child {
+  border-bottom: none;
+}
+
+.item-title {
+  font-weight: 500;
+  font-size: 0.875rem;
+  color: #111;
+}
+
+.item-desc {
+  font-size: 0.78rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.item-subtotal {
+  font-weight: 500;
+  font-size: 0.875rem;
+  white-space: nowrap;
+  color: #111;
+}
+
+/* ── Total ── */
+.total-amount {
+  font-size: 1.1rem;
+  color: #111;
+}
+
+/* ── Inputs del formulario ── */
+.card .form-control,
+.card .form-select {
+  border-radius: 10px;
+  border-color: #e0e0e0;
+  padding: 0.65rem 0.9rem;
+  font-size: 0.9rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.card .form-control:focus,
+.card .form-select:focus {
+   border-color: var(--bs-red);
+  box-shadow: 0 0 0 2px #ab301a;
+}
+
+/* ── Botón submit ── */
+.submit-btn {
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  transition: opacity 0.2s ease;
+}
+
+.submit-btn:hover {
+  opacity: 0.85;
+}
+
+/* ── Feedback de errores ── */
+.invalid-feedback {
+  font-size: 0.8rem;
+}
+
+/* ── Utilidades ── */
+.fw-500 {
+  font-weight: 500;
+}

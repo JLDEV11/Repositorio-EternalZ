@@ -1,0 +1,58 @@
+ <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top" role="navigation" aria-label="Navegación principal">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'index' %}" aria-label="Estilo Urbano - Inicio">
+                EternalZ
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Abrir menú de navegación">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item"><a class="nav-link" href="{% url 'index' %}">Inicio</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarCategorias" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Categorías
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarCategorias">
+                            <li><a class="dropdown-item" href="{% url 'categoria_hombre' %}">Hombre</a></li>
+                            <li><a class="dropdown-item" href="{% url 'categoria_mujer' %}">Mujer</a></li>
+                           
+                        </ul>
+                    </li>
+                    
+                    <li class="nav-item"><a class="nav-link" href="{% url 'index' %}#nosotros">Nosotros</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'index' %}#newsletter">Newsletter</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarUsuario" role="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Menú de usuario">
+                            <i class="fas fa-user" aria-hidden="true"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end" aria-labelledby="navbarUsuario">
+                           
+                            <li><a class="dropdown-item" href="{% url 'lista_pedidos' %}"><i class="fas fa-box me-2"></i>Mis Pedidos</a></li>
+                          
+                            <li><hr class="dropdown-divider"></li>
+                           
+                            {% if  user.is_superuser %}
+                            <li><a class="dropdown-item" href="{% url 'admin:index' %}"><i class="fas fa-user-tie me-2"></i>Panel de administración</a></li>
+                            {% endif %}
+                            {% if not user.is_authenticated %}
+                            <li><a class="dropdown-item" href="{% url 'iniciar_sesion' %}"><i class="fas fa-arrow-right-to-bracket me-2"></i>Iniciar sesión</a></li>
+                            <li><a class="dropdown-item" href="{% url 'registrar_usuario' %}"><i class="fas fa-user-plus me-2"></i>Registrarse</a></li>
+                            {% else %}
+                            <li><a class="dropdown-item" href="{% url 'cerrar_sesion' %}"><i class="fas fa-sign-out-alt me-2"></i>Cerrar Sesión</a></li>
+                            {% endif %}
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'carrito_compras' %}" aria-label="Ver carrito de compras">
+                            <i class="fas fa-shopping-cart" aria-hidden="true"></i>
+                            <span class="visually-hidden">Carrito</span>
+                        </a>
+                    </li>
+                    
+                
+                </ul>
+            </div>
+        </div>
+    </nav>

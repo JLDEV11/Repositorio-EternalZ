@@ -1,0 +1,156 @@
+{% load static  %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <meta name="author" content="Julián López">
+     {% block extra_meta %}
+    <meta name="description" content="Estilo Urbano - Tienda de ropa streetwear premium. Descubre la mejor colección de camisetas, sudaderas, gorras y zapatillas urbanas con envío gratis.">
+    <meta name="keywords" content="streetwear, ropa urbana, sudaderas, camisetas oversize, zapatillas, moda urbana, ropa de calle">
+   
+    <meta property="og:title" content="Estilo Urbano - Ropa Streetwear Premium">
+    <meta property="og:description" content="Define tu estilo con la mejor colección de ropa streetwear urbana. Autenticidad y actitud en cada prenda.">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="/images/og-image.jpg">
+     {% endblock %}
+    <title> {% block title %} Estilo Urbano - Ropa Streetwear Premium | Tienda Online {% endblock %} </title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="{% static 'index/css/style.css' %}">
+    {% block extra_head %}
+
+    {% endblock %}
+</head>
+<body>
+  
+    {% block content %}
+
+    <!--Navbar-->
+
+    {% include 'partials/navbar.html' %}
+   
+
+    <!--Header-->
+    <header id="home" class="header">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-7 contenido-header">
+                    <h1>
+                        DEFINE TU
+                        <span class="highlight">ESTILO</span>
+                    </h1>
+                    <p>La mejor colección de ropa streetwear urbana. Autenticidad y actitud en cada prenda.</p>
+                    <a href="#productos" class="btn btn-custom">
+                        Explorar Colección <i class="fas fa-arrow-right ms-2" aria-hidden="true"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Contenido principal -->
+    <main id="contenido-principal">
+        <!-- Sección de productos -->
+        <section id="productos" class="productos">
+            <div class="container">
+                <h2 class="titulo-seccion coleccion">Colección Destacada</h2>
+                <div class="row">
+                    
+                    {% for articulo in articulos_destacados %}
+                    {% if articulo.tiene_variantes %}
+                    <article class="col-md-4">
+                        <div class="tarjeta-producto">
+                            <a href="{% url 'detalle_producto' articulo.id  %}" class="link-producto" aria-label="Ver detalles de {{articulo.nombre}} por {{articulo.precio}}">
+                                <div class="imagen-producto" role="img" aria-label="Imagen del producto">
+                              
+                                    <img src="{{articulo.imagen_articulo.url}}" alt="imagen_producto">
+
+                                
+                                  
+                                </div>
+                                <div class="producto-info">
+                                    <h3 class="nombre-producto">{{articulo.nombre}}</h3>
+                                   
+                                </div>
+                            </a>
+                        </div>
+                    </article>
+                
+                        
+                    {% endif %}
+                        
+                    {%  endfor %}
+                   
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section id="caracteristicas" class="caracteristicas">
+            <div class="container">
+                <h2 class="titulo-seccion caracteristicas">¿Por Qué Elegirnos?</h2>
+                <div class="row">
+                    <article class="col-md-4">
+                        <div class="caracteristica-box">
+                            <div class="caracteristica-icono" aria-hidden="true">
+                                <i class="fas fa-shipping-fast"></i>
+                            </div>
+                            <h3 class="caracteristica-titulo">Envío Gratis</h3>
+                            <p class="caracteristica-texto">En todos los pedidos superiores a $50. Recibe tu estilo en tiempo récord.</p>
+                        </div>
+                    </article>
+                    <article class="col-md-4">
+                        <div class="caracteristica-box">
+                            <div class="caracteristica-icono" aria-hidden="true">
+                                <i class="fas fa-award"></i>
+                            </div>
+                            <h3 class="caracteristica-titulo">Calidad Premium</h3>
+                            <p class="caracteristica-texto">Materiales de primera y diseños exclusivos que marcan tendencia.</p>
+                        </div>
+                    </article>
+                    <article class="col-md-4">
+                        <div class="caracteristica-box">
+                            <div class="caracteristica-icono" aria-hidden="true">
+                                <i class="fas fa-undo"></i>
+                            </div>
+                            <h3 class="caracteristica-titulo">Devolución Fácil</h3>
+                            <p class="caracteristica-texto">30 días para cambios y devoluciones sin complicaciones.</p>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Newsletter Section -->
+        <section id="newsletter" class="newsletter text-center">
+            <div class="container">
+                <h2>ÚNETE A LA CREW</h2>
+                <p>Recibe ofertas exclusivas y las últimas novedades del streetwear</p>
+                <form class="newsletter-form" aria-label="Formulario de suscripción al newsletter">
+                    <div class="input-group">
+                        <label for="email-newsletter" class="visually-hidden">Correo electrónico</label>
+                        <input type="email" id="email-newsletter" name="email" class="form-control newsletter-input" 
+                            placeholder="Tu email" 
+                            required
+                            aria-required="true"
+                            autocomplete="email">
+                        <button class="btn btn-newsletter" type="submit">Suscribirse</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <!--Footer-->
+    {% include 'partials/footer.html' %}
+    {% endblock %}
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    {% block extra_js %}
+
+    {% endblock %}
+</body>
+</html>

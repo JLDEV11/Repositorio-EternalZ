@@ -1,0 +1,26 @@
+.container-fluid{
+    min-height: 100dvh;
+   
+}
+
+
+.row{
+    border:2px solid #000;
+    max-width: 500px;
+    box-shadow: 10px 10px 5px;
+   
+  
+  
+}
+
+.fa-2xl{
+    font-size: 4rem;
+   
+
+}
+
+
+.fa-2xl:hover{
+    transform:scale(1.5);
+
+}

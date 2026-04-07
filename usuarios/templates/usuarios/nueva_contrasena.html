@@ -1,0 +1,54 @@
+{% extends 'usuarios/cambiar_contrasena.html' %}
+
+{% block title %}
+
+Nueva contraseña
+{% endblock %}
+
+
+
+{% block form_text %}
+
+    <h2 class="h4 text-center">Cambia tu contraseña</h2>
+
+   
+{% endblock  %}
+
+
+{% block image %}
+
+ <div class="col-12 col-md-6 contenedor-imagen2">
+            </div>
+    
+{% endblock  %}
+    
+
+{% block form %}
+
+
+<form method="post">
+
+{% csrf_token %}
+
+ <div class="row gy-3 overflow-hidden">
+         <div class="col-12">
+     <div class="form-floating mb-3 formulario  ">
+
+          
+          {{form}}
+            
+                
+        
+                        
+        </div>
+            </div>
+        <div class="col-12">
+            <div class="d-grid">
+        <button class="boton-enviar btn btn-dark btn-lg" type="submit">Cambiar contraseña</button>
+            </div>
+            </div>
+        </div>
+
+</form>
+{% endblock %}
+    

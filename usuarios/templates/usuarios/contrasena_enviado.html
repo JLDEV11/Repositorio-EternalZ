@@ -1,0 +1,44 @@
+{% extends 'index/index.html' %}
+{% load static  %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'contrasena_enviado/css/contrasena_enviado.css' %}">
+
+{% endblock %}
+
+{% block title %} Cambiar contraseña {% endblock %}
+
+
+
+{% block content %}
+
+<main>
+
+<div class="container-fluid d-flex ">
+
+   
+
+
+    <div class="row m-auto bg-light">
+
+        <div class="col-12 text-center p-5">
+<i class="fa-solid fa-circle-check  fa-2xl mb-5" style="color: #73e316;"></i>
+            <h1>!Excelente!</h1>
+ 
+            <p>Hemos enviado a tu bandeja de entrada un correo con las intrucciones 
+                para continuar con la recuperación de tu contraseña.</p>
+
+        </div>
+    </div>
+  
+
+      
+
+    
+</div>
+
+
+</main>
+
+
+{% endblock %}

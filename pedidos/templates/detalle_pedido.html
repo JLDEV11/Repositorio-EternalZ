@@ -1,0 +1,137 @@
+{% extends 'index/index.html' %}
+{% load static %}
+{% load filtros %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'css/pedidos/detalle_pedido.css' %}">
+
+{% endblock %}
+
+{% block content %}
+{% include 'partials/navbar.html' %}
+
+<main>
+  <div class="container" style="max-width:800px;">
+
+  
+    <div class="mb-4">
+      <a href="{% url 'lista_pedidos' %}" class="back-link text-muted small">
+        <i class="bi bi-arrow-left me-1"></i>Mis pedidos
+      </a>
+      <h1 class="page-title mt-2 mb-0">Pedido <span class="text-muted fw-normal">#{{ pedido.numero_pedido }}</span></h1>
+      <p class="text-muted small mt-1">
+        <i class="bi bi-calendar3 me-1"></i>{{ pedido.fecha_pedido|date:"j \d\e F, Y" }}
+      </p>
+    </div>
+
+  
+    <div class="card border-0 shadow-sm rounded-4 mb-4 overflow-hidden">
+
+      <div class="card-header-dark px-4 py-3 d-flex justify-content-between align-items-center">
+        <span class="text-white small text-uppercase fw-500" style="letter-spacing:1.5px;">Estado del pedido</span>
+        <span class="estado-pill">
+          {% if pedido.estado == 'P' %}Pendiente
+          {% elif pedido.estado == 'X' %}Cancelado
+          {% elif pedido.estado == 'E' %}Enviado
+      
+          {% else %}
+          Entregado
+          {% endif %}
+        </span>
+      </div>
+
+      <div class="card-body px-4 py-4">
+        <div class="steps d-flex justify-content-between">
+
+         
+
+          <div class="step {% if pedido.estado == 'P' %}completed procesando{% endif %} ">
+            <div class="step-icon-wrap">
+              <div class="step-icon"><i class="bi bi-hourglass-split"></i></div>
+            </div>
+            <p class="step-title">Pendiente</p>
+          </div>
+
+          <div class="step {% if pedido.estado == 'E' %}completed  enviado{% endif %} ">
+            <div class="step-icon-wrap">
+              <div class="step-icon"><i class="bi bi-truck"></i></div>
+            </div>
+            <p class="step-title">Enviado</p>
+          </div>
+
+          <div class="step {% if pedido.estado == 'G' %}completed entregado{% endif %} ">
+            <div class="step-icon-wrap">
+              <div class="step-icon"><i class="bi bi-house"></i></div>
+            </div>
+            <p class="step-title">Entregado</p>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+   
+    <div class="row g-4">
+
+   
+      <div class="col-md-7">
+        <div class="card border-0 shadow-sm rounded-4 h-100">
+          <div class="card-body p-4">
+            <h6 class="section-label mb-3">Productos</h6>
+            <ul class="list-unstyled mb-0">
+              {% for item in items %}
+              <li class="d-flex justify-content-between align-items-start py-2 {% if not forloop.last %}border-bottom{% endif %}">
+                <div>
+                  <p class="mb-0 fw-500 small">{{ item.variante_articulo.articulo.nombre }}</p>
+                  <small class="text-muted">Talla: {{ item.variante_articulo.talla }} · Cant: {{ item.cantidad }}</small>
+                </div>
+                <span class="small fw-500 ms-3">{{ item.subtotal | precio_cop }}</span>
+              </li>
+              {% endfor %}
+            </ul>
+            <div class="d-flex justify-content-between pt-3 mt-2 border-top">
+              <span class="fw-500">Total</span>
+              <span class="fw-bold">{{ pedido.total | precio_cop }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    
+      <div class="col-md-5">
+        <div class="card border-0 shadow-sm rounded-4 h-100">
+          <div class="card-body p-4">
+            <h6 class="section-label mb-3">Datos de envío</h6>
+
+            <div class="info-row">
+              <small class="text-muted d-block">Destinatario</small>
+              <p class="mb-0 fw-500 small">{{ pedido.nombre_envio }} {{ pedido.apellido_envio }}</p>
+            </div>
+
+            <div class="info-row">
+              <small class="text-muted d-block">Dirección</small>
+              <p class="mb-0 fw-500 small">{{ pedido.direccion_envio }}</p>
+            </div>
+
+         
+
+            <div class="info-row mb-0">
+              <small class="text-muted d-block">Pago</small>
+              <p class="mb-0 fw-500 small">{{ pedido.payment_id|default:"MercadoPago" }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+   
+    <div class="mt-4 text-center">
+      <a href="{% url 'index' %}" class="btn btn-dark rounded-pill px-5">
+        Seguir comprando
+      </a>
+    </div>
+
+  </div>
+</main>
+{% endblock %}

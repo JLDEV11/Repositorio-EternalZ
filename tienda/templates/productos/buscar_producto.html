@@ -1,0 +1,43 @@
+{% extends "index/index.html" %}
+
+{% block content %}
+{% include 'partials/navbar.html' %}
+
+
+<main>
+    
+
+     <section id="productos" class="productos">
+            <div class="container">
+             
+                <div class="row">
+                    {% if productos %}
+                    {% for producto in productos %}
+                    <article class="col-md-4">
+                        <div class="tarjeta-producto">
+                            <a href="{% url 'detalle_producto' producto.id  %}" class="link-producto" aria-label="Ver detalles de {{producto.nombre}} por {{producto.precio}}">
+                                <div class="imagen-producto" role="img" aria-label="Imagen del producto">
+                              
+                                    <img src="{{producto.imagen_articulo.url}}" alt="imagen_producto">
+
+                                
+                                  
+                                </div>
+                                <div class="producto-info">
+                                    <h3 class="nombre-producto">{{producto.nombre}}</h3>
+                                    <p class="precio-producto">${{producto.precio}}</p>
+                                </div>
+                            </a>
+                        </div>
+                    </article>
+                    {%  endfor %}
+                    {% endif %}
+                   
+                </div>
+            </div>
+        </section>
+
+  
+</main>
+
+{% endblock %}

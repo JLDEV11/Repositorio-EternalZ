@@ -1,0 +1,73 @@
+{% extends 'index/index.html' %}
+{% load static %}
+
+
+{% block extra_meta %}
+<meta name="description" content="Este es el formulario para registrar un usuario">
+{% endblock %}
+
+{% block title %} Registrar usuario {% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'registrar_usuario/css/registrar_usuario.css' %}">
+{% endblock %}
+
+
+{% block content %}
+<main>
+
+ <div class="contenedor__principal">
+
+
+    <div class="contenedor__formulario">
+
+        <div class="panel__izquierdo">
+<img src="{% static 'images/urban.jpg' %}" alt="panel-img">
+          
+        </div>
+
+        <div class="panel__derecho">
+             <h1 class="formulario__mensaje">Regístrate</h1>
+                <span>Llena los siguientes datos</span>
+
+            <form action="{% url 'registrar_usuario' %}" method="post" class="formulario__grid">
+               
+                {% csrf_token %}
+                {% for field in form %}
+
+                <div class="formulario__campo">
+                     <label for="{{ field.id_for_label }}" class="formulario__etiqueta">
+            {{ field.label }}
+          </label>
+                    {{field}}
+
+                     <!--Errores del formulario-->
+           {% if field.errors %}
+                    <div class="invalid-feedback d-block">
+                      <i class="bi bi-exclamation-circle me-1"></i>{{ field.errors.0 }}
+                    </div>
+                  {% endif %}
+          
+                </div>
+
+                {% endfor %}
+               
+                <button type="submit" class="boton__submit">Crear cuenta</button>
+
+
+            </form>
+        </div>
+
+
+       
+
+     
+
+    </div>
+
+
+ </div>
+   
+    
+   </main>
+{% endblock %}

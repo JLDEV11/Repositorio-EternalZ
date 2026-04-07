@@ -1,0 +1,72 @@
+{% extends 'index/index.html' %}
+
+{% load static %}
+
+
+{% block title %}
+
+Contraseña cambiada
+    
+{% endblock  %}
+
+
+{% block extra_head %}
+    <link rel="stylesheet" href="{% static 'contrasena_completado/css/contrasena_completado.css' %}">
+{% endblock  %}
+    
+  {% block content %}  
+
+  <main>
+
+
+    <div class="container-fluid d-flex">
+
+      <div class="row m-auto">
+
+        <div class="col-12 text-center p-5">
+            <i class="fa-regular fa-thumbs-up fa-2xl mb-5" style="color: #000000;"></i>
+             <h1>!Genial!</h1>
+ 
+            <p>Se ha cambiado tu contraseña satisfactoriamente, redirigiendo al inicio de sesión en <span id="span"></span> segundos </p>
+        </div>
+
+
+      </div>
+    </div>
+
+
+    
+  </main>
+
+
+ <script>
+
+   const span = document.getElementById('span')
+
+  
+
+   let intervalo=6
+   
+
+   const actualizarIntervalo=()=>{
+    span.innerHTML=intervalo
+    intervalo-=1
+
+    if(intervalo<=0){
+        clearInterval(funcionIntervalo)
+        window.location.href="{% url 'iniciar_sesion' %}"
+    }
+}
+
+    const funcionIntervalo=setInterval(actualizarIntervalo, 1000)
+
+
+    
+    
+    
+   
+
+ </script>
+
+
+  {% endblock %}

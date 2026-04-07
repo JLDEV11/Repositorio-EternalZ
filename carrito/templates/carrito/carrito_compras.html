@@ -1,0 +1,228 @@
+{% extends 'index/index.html' %}
+{% load static %}
+{% load filtros %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'carrito/css/carrito.css' %}">
+
+{% endblock %}
+
+{% block content %}
+{% include 'partials/navbar.html' %}
+
+<main class="py-5">
+  <div class="container">
+
+    {% if messages %}
+      <div class="mb-4">
+        {% for message in messages %}
+          <div class="alert alert-{{ message.tags }} alert-dismissible fade show d-flex align-items-center gap-2 rounded-3 shadow-sm" role="alert">
+            <i class="bi bi-info-circle-fill fs-5"></i>
+            <span>{{ message }}</span>
+            <button type="button" class="btn-close ms-auto" data-bs-dismiss="alert"></button>
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+  
+    {% if not items %}
+      <div class="empty-state text-center py-5 my-5">
+        <i class="bi bi-cart-x display-1 text-secondary mb-4 d-block"></i>
+        <h2 class="carrito-title mb-2">Tu carrito está vacío</h2>
+        <p class="text-muted mb-4">Aún no has agregado ningún producto.</p>
+        <a href="{% url 'index' %}" class="btn btn-dark btn-lg px-5 rounded-pill">
+          Ver productos
+        </a>
+      </div>
+    {% endif %}
+
+   
+    {% if items %}
+      <h1 class="carrito-title mb-1">Carrito de compras</h1>
+      <p class="text-muted mb-5">{{ carrito.total_items }} {% if carrito.total_items == 1 %}artículo{% else %}artículos{% endif %} en tu carrito</p>
+
+      <div class="row g-4 align-items-start">
+
+     
+        <div class="col-lg-8">
+          <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+            <div class="card-body p-0">
+
+              {% for item in items %}
+                <div class="cart-item px-4 py-4 {% if not forloop.last %}border-bottom{% endif %}">
+                  <div class="row align-items-center g-3">
+
+                   
+                    <div class="col-3 col-md-2">
+                      <div class="cart-img-wrap rounded-3 overflow-hidden">
+                        <img
+                          src="{{ item.variante_articulo.articulo.imagen_articulo.url }}"
+                          alt="{{ item.variante_articulo.articulo.nombre }}"
+                          class="img-fluid w-100 object-fit-cover">
+                      </div>
+                    </div>
+
+              
+                    <div class="col-9 col-md-4">
+                      <p class="item-name mb-1">{{ item.variante_articulo.articulo.nombre }}</p>
+                      <span class="badge bg-light text-dark border">Talla: {{ item.variante_articulo.talla }}</span>
+                      <p class="text-muted small mt-1 mb-0">Cantidad: {{ item.cantidad }}</p>
+                    </div>
+
+                 
+                    <div class="col-7 col-md-4">
+                      <div class="d-flex align-items-center gap-2">
+                        <form method="post" action="{% url 'actualizar_cantidad' item.variante_articulo.id %}">
+                    {% csrf_token %}
+                    <div class="d-flex align-items-center gap-2">
+
+                        <button type="submit" name="cantidad" value="{{ item.cantidad|add:'-1' }}"
+                            class="btn btn-outline-secondary btn-sm rounded-circle qty-btn">
+                            <i class="fas fa-minus"></i>
+                        </button>
+
+                        <input type="number" min="1"  value="{{ item.cantidad }}"
+                            class="form-control form-control-sm text-center qty-input"
+                            readonly>
+
+                        <button type="submit" name="cantidad" value="{{ item.cantidad|add:'1' }}"
+                            class="btn btn-outline-secondary btn-sm rounded-circle qty-btn">
+                            <i class="fas fa-plus"></i>
+                        </button>
+
+                    </div>
+                </form>
+                        
+                      </div>
+                    </div>
+
+                  
+                    <div class="col-5 col-md-2 d-flex align-items-center justify-content-between justify-content-md-end gap-3">
+                      <span class="item-price fw-500">{{ item.subtotal | precio_cop }}</span>
+
+                    <button type="button" class="btn btn-link p-0 text-decoration-none text-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">
+ 
+                  <i class="bi bi-trash3 me-1"></i>
+                  </button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5 fw-bolder" id="exampleModalLabel">Eliminar elemento</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body text-center">
+        ¿Estás seguro de que quieres eliminar este elemento del carrito?
+      </div>
+      <div class="modal-footer d-flex justify-content-between">
+        <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Cerrar</button>
+
+        <button type="submit" class="btn btn-danger">
+       
+    <a href="{% url 'eliminar_carrito' item.variante_articulo.id %}" class="nav-link-custom text-light" title="Eliminar">  Sí, eliminar</a>
+         
+    </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+                      
+                    </div>
+
+                  </div>
+                </div>
+              {% endfor %}
+
+            </div>
+          </div>
+
+        
+          <div class="d-flex justify-content-between align-items-center mt-3 px-1">
+            <a href="{% url 'index' %}" class="nav-link-custom">
+              <i class="fas fa-arrow-left me-2"></i>Seguir comprando
+            </a>
+
+            <!-- Button trigger modal -->
+<button type="button" class="btn btn-link p-0 text-decoration-none text-danger" data-bs-toggle="modal" data-bs-target="#modal_vaciar">
+ 
+  <i class="bi bi-trash3 me-1"></i>Vaciar carrito
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="modal_vaciar" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5 fw-bolder" id="exampleModalLabel">Vaciar carrito</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body text-center">
+        ¿Estás seguro que quieres vaciar el carrito?
+      </div>
+      <div class="modal-footer d-flex justify-content-between">
+        <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Cerrar</button>
+
+        <button type="submit" class="btn btn-danger">
+        
+
+          <a href="{% url 'limpiar_carrito' %}" class="nav-link-custom text-light">
+          Sí, vaciar
+            </a>
+    </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+          </div>
+        </div>
+
+        <div class="col-lg-4">
+          <div class="card border-0 shadow-sm rounded-4 summary-card">
+            <div class="card-body p-4">
+              <h4 class="carrito-title mb-4">Resumen</h4>
+
+              <div class="d-flex justify-content-between mb-3">
+                <span class="text-muted">Artículos</span>
+                <span class="fw-500">{{ carrito.total_items }}</span>
+              </div>
+
+              <div class="d-flex justify-content-between mb-3">
+                <span class="text-muted">Subtotal</span>
+                <span class="fw-500">{{ total | precio_cop }}</span>
+              </div>
+
+              <div class="d-flex justify-content-between mb-3">
+                <span class="text-muted">Envío</span>
+                <span class="text-success small fw-500">Se calcula al pagar</span>
+              </div>
+
+              <hr class="my-3">
+
+              <div class="d-flex justify-content-between mb-4">
+                <span class="fw-bold fs-6">Total estimado</span>
+                <span class="fw-bold fs-6">{{ total | precio_cop }}</span>
+              </div>
+
+              <a href="{% url 'checkout' %}" class="btn btn-dark w-100 py-3 rounded-pill checkout-btn">
+                Ir al checkout <i class="fas fa-arrow-right ms-2"></i>
+              </a>
+
+              <p class="text-center text-muted small mt-3 mb-0">
+                <i class="bi bi-shield-lock me-1"></i>Pago seguro
+              </p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    {% endif %}
+
+  </div>
+</main>
+{% endblock %}

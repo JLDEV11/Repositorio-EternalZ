@@ -1,0 +1,75 @@
+.contenedor-imagen1{
+    background-image: url("../../images/photo-1635650804263-1a1941e14df5.avif");
+    background-size: cover;
+    background-position-y:-50px;
+   
+}
+
+.contenedor-imagen2{
+    background-image: url("../../images/photo-1542327534-59a1fe8daf73.avif");
+    background-size: cover;
+    background-position:center;
+    background-repeat: no-repeat;
+   
+}
+
+.titulo-marca{
+    font-size: 28px;
+    font-weight: 900;
+    font-style: italic;
+    color: var(--bs-red) !important;
+    letter-spacing: 2px;
+}
+
+
+
+label{
+    margin-bottom: 8px;
+}
+
+.errorlist{
+    color:var(--bs-red)
+}
+
+.boton-enviar{
+    background-color: var(--bs-dark);
+    border-radius: 0;
+  color:#fff;
+  border: none;
+  padding: 10px 0;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: transform 0.3s ease, background-color 0.3s ease, color 0.3s ease;
+  display: inline-block; /* make transform reliable */
+  will-change: transform;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+.boton-enviar:hover{
+    background-color: var(--bs-red);
+  color: var(--bs-dark);
+  transform: scale(1.05);
+}
+
+form input{
+    padding: 10px  !important;
+    border: 1px solid #ccc !important;
+    border-radius: 8px !important;
+    outline: none !important;
+    transition: all 0.3s ease !important;
+}
+
+form input:focus{
+    border-color: var(--bs-red) !important;
+    box-shadow: 0 0 0 2px #ab301a !important;
+}
+
+.helptext{
+    display:none;
+}
+
+.formulario>div{
+    margin-bottom: 15px;
+}

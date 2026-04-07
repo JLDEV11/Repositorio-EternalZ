@@ -1,0 +1,162 @@
+
+
+
+/*  BLOQUE PRINCIPAL */
+
+
+.inicio-sesion {
+  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100dvh;
+  background-color: var(--bs-black);
+  padding: 20px;
+}
+
+.inicio-sesion__contenedor {
+  display: flex;
+  width: 850px;
+  height: 600px;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+  background-color: #fff;
+  transition: all 0.3s ease;
+}
+
+/* === PANEL IZQUIERDO === */
+.inicio-sesion__panel {
+  background-color: #EFEFEB;
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.inicio-sesion__mensaje {
+  
+  font-size: 2.8rem;
+  font-weight: 600;
+  text-align: center;
+  color:var(--bs-dark)
+}
+
+/* === PANEL DERECHO === */
+.inicio-sesion__formulario {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+}
+
+/* === FORMULARIO === */
+.formulario {
+  width: 100%;
+  max-width: 350px;
+  display: flex;
+  flex-direction: column;
+}
+
+.formulario__titulo {
+  color:var(--bs-red);
+  font-size: 2.6rem;
+  font-weight: 700;
+  margin-bottom: 25px;
+  text-align: center;
+  
+}
+
+.formulario__grupo {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+}
+
+.formulario__etiqueta {
+  font-weight: 500;
+  margin-bottom: 5px;
+  color:var(--bs-dark)
+}
+
+.form-control:focus{
+  color:var(--bs-dark)
+}
+
+.formulario input {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.formulario input:focus {
+    border-color: var(--bs-red);
+  box-shadow: 0 0 0 2px #ab301a;
+}
+
+/* Botón*/
+.formulario__boton {
+  background-color: var(--bs-dark);
+  color:#fff;
+  border: none;
+  padding: 10px 0;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: transform 0.3s ease, background-color 0.3s ease, color 0.3s ease;
+  display: inline-block; /* make transform reliable */
+  will-change: transform;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+.formulario__boton:hover {
+
+   background-color: var(--bs-red);
+  color: var(--bs-dark);
+  transform: scale(1.05);
+}
+
+/* Media queries */
+@media (max-width: 768px) {
+  .inicio-sesion__contenedor {
+    flex-direction: column;
+    width: 95%;
+    height: auto;
+  }
+
+  .inicio-sesion__panel {
+    height: 180px;
+    flex: none;
+  }
+
+  .inicio-sesion__mensaje {
+    font-size: 2rem;
+  }
+
+  .inicio-sesion__formulario {
+    padding: 30px 20px;
+  }
+}
+
+.formulario__errores {
+  color: #d32f2f;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+}
+
+.formulario__error {
+  margin: 0.25rem 0;
+}
+
+.recuperar-contraseña{
+  color:var(--bs-dark);
+  text-decoration: none;
+}
+
+.recuperar-contraseña:hover{
+  transform: scale(1.1);
+}
